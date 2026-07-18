@@ -1,16 +1,27 @@
 import express from 'express'
 import courseRouter from './routes/coursesRoutes.js'
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+import { ERROR } from './utils/httpStatus.js'
+import cors from 'cors'
+dotenv.config()
 const app = express()
-const url = 'mongodb://mersalhussin_db_user:WAGleNVhc0eWmtai@ac-cdsjk3r-shard-00-00.iqgoxr5.mongodb.net:27017,ac-cdsjk3r-shard-00-01.iqgoxr5.mongodb.net:27017,ac-cdsjk3r-shard-00-02.iqgoxr5.mongodb.net:27017/?ssl=true&replicaSet=atlas-1112pm-shard-0&authSource=admin&retryWrites=true&w=majority';
+const url = process.env.MONGO_URL;
+// Cors to use at borwser Cross Orign Resource Shearing in(not working in the not same port)
+app.use(cors())
+
 // Middleware to use request.body
 app.use(express.json())
 
 app.use('/api/courses', courseRouter)
 
-app.listen(4000, () => {
+
+
+app.listen(process.env.PORT || 4000, () => {
     console.log('Server is running on port 4000')
 })
+
+
 
 mongoose.connect(url, { dbName: 'Mersal' })
     .then(() => {
@@ -19,3 +30,9 @@ mongoose.connect(url, { dbName: 'Mersal' })
     .catch((error) => {
         console.error('MongoDB connection failed:', error.message)
     })
+
+
+    // Global Middleware for not found routes
+    app.use((req, res) => {
+    res.status(404).json({ status: ERROR, message: 'This Resource is not Avilable' })
+})
