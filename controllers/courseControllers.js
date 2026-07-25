@@ -78,11 +78,15 @@ export const editCourse = async(req,res)=>{
 export const removeCourse = async(req,res)=>{
     const courseId = req.params.courseId
     try{
-        await Course.findByIdAndDelete(courseId)
+        const course = await Course.findByIdAndDelete(courseId)
+        if(!course){
+            res.status(404).json({status:FAIL, data:"Course Not Found"})
+        }
         res.status(201).json({status:SUCCESS ,data: `Deleted Succesfully By id: ${courseId}`})
         const courses = await Course.find();
         fs.writeFileSync(coursesFilePath,JSON.stringify(courses,null,2))
 
+        
     }catch(err){
         res.status(400).json({status:FAIL, message:err})
     }

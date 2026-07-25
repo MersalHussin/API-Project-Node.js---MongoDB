@@ -1,6 +1,9 @@
 import express from 'express'
 import { addCourse, editCourse, getAllCourses, getSingleCourse, removeCourse } from '../controllers/courseControllers.js'
 import {bodyValidation} from '../middlewares/validationSchema.js'
+import { verfiyToken } from '../middlewares/verfiyToken.js'
+import { userRoles } from '../utils/userRoles.js'
+import { allowedTo } from '../middlewares/allowedTo.js'
 const router = express.Router()
 
 // عندنا خاصية الـ route داخل الrouter بتخليني اني اعمل كذا method في Route واح
@@ -30,17 +33,17 @@ res.send("HEllo owrld")
 
 router.route('/')
 // Get All Courses
-    .get(getAllCourses)
+    .get(verfiyToken,getAllCourses)
 // Post Course
-    .post(bodyValidation(),addCourse)
+    .post(verfiyToken,allowedTo(userRoles.MANGER),bodyValidation(),addCourse)
 
 
 router.route('/:courseId')
     // Get 1 Course
-    .get(getSingleCourse)
+    .get(verfiyToken,getSingleCourse)
     // Edit Course
-    .patch(editCourse)
+    .patch(verfiyToken,editCourse)
     // Delete Course
-    .delete(removeCourse)
+    .delete(verfiyToken,allowedTo(userRoles.ADMIN,userRoles.MANGER),removeCourse)
 
 export default router

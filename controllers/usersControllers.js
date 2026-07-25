@@ -34,7 +34,7 @@ export const login = async(req, res)=>{
 
         if(user && matchedPassword){
             // Logged in Succesfully
-        const token =  generateJWT({email,id:user._id})
+        const token =  generateJWT({email,id:user._id,role:user.role})
 
             return res.status(200).json({status:SUCCESS, data:token})
         }else{
@@ -47,7 +47,7 @@ export const login = async(req, res)=>{
     }
 
 export const register = async(req,res) =>{
-    const {fristName,lastName,email,password} = req.body   
+    const {fristName,lastName,email,password,role} = req.body   
     try{
 
         
@@ -57,9 +57,9 @@ export const register = async(req,res) =>{
         
         const oldUser = await User.findOne({email:email})
         if(oldUser){ return res.status(400).json({status:FAIL, data: `user with email ${email} already exists`})}
-        const newUser = new User({fristName,lastName,email,password:hashedPassowrd})
+        const newUser = new User({fristName,lastName,email,password:hashedPassowrd,role})
         
-        const token =  generateJWT({email,id:newUser._id})
+        const token =  generateJWT({email,id:newUser._id,role})
 
         newUser.token= token
 

@@ -10,8 +10,9 @@ export const verfiyToken = (req,res,next)=>{
     const token = authHeader.split(' ')[1];
     try{
         const decodedToken  = jwt.verify(token,process.env.JWT_SECRET_KEY)
-        console.log("Token",token);
-        console.log("Decodedz",decodedToken);
+        console.log("Currnet User",decodedToken);
+        req.currnetUser = decodedToken
+
         next()
     }catch{ 
         return res.status(401).json({status:FAIL, message:"Unauthorized"})

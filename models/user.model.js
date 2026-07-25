@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import validator from 'validator'
+import {userRoles} from '../utils/userRoles.js'
 
 const userSchema = new mongoose.Schema({
     fristName:{
@@ -23,6 +24,15 @@ const userSchema = new mongoose.Schema({
     token:{
         type: String,
         required:true
+    },
+    role:{
+        type:String,
+        enum:[userRoles.USER,userRoles.ADMIN,userRoles.MANGER],
+        default:userRoles.USER
+    },
+    avatar:{
+        type:String,
+        default:'uploads/images.jpeg'
     }
 
 })

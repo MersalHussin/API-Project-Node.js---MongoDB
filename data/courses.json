@@ -1,33 +1,5 @@
 [
   {
-    "_id": "6a5a318d535a51c6d659f66d",
-    "name": "Math",
-    "price": 2300,
-    "title": "Math2"
-  },
-  {
-    "_id": "6a5a318d535a51c6d659f670",
-    "name": "Math3",
-    "price": 2000
-  },
-  {
-    "_id": "6a5a318d535a51c6d659f671",
-    "name": "Math3",
-    "price": 2200
-  },
-  {
-    "_id": "6a5a3937d084ab036bded544",
-    "title": "",
-    "price": 2,
-    "__v": 0
-  },
-  {
-    "_id": "6a5a394c86b2987b5db7542d",
-    "title": "Matsh3eew",
-    "price": 2200,
-    "__v": 0
-  },
-  {
     "_id": "6a5a3973fb8b11f22580332b",
     "title": "h3wqewqeeew",
     "price": 2200,
@@ -151,6 +123,12 @@
     "_id": "6a5b4f9163b7827b7975b9be",
     "title": "asd ",
     "price": 3,
+    "__v": 0
+  },
+  {
+    "_id": "6a652c98bea53028d78585a2",
+    "title": "sha7sasdhdasdasds ",
+    "price": 22224433243214324000,
     "__v": 0
   }
 ]
