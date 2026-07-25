@@ -57,7 +57,14 @@ export const register = async(req,res) =>{
         
         const oldUser = await User.findOne({email:email})
         if(oldUser){ return res.status(400).json({status:FAIL, data: `user with email ${email} already exists`})}
-        const newUser = new User({fristName,lastName,email,password:hashedPassowrd,role})
+        const newUser = new User({
+            fristName,
+            lastName,
+            email,
+            password:hashedPassowrd,
+            role,
+            avatar:req.file.filename
+        })
         
         const token =  generateJWT({email,id:newUser._id,role})
 

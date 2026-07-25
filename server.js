@@ -4,13 +4,17 @@ import usersRouter from './routes/usersRoutes.js'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import { ERROR } from './utils/httpStatus.js'
+import path, { dirname } from 'path'
 import cors from 'cors'
+import { fileURLToPath } from 'url'
 dotenv.config()
 const app = express()
 const url = process.env.MONGO_URL;
 // Cors to use at borwser Cross Orign Resource Shearing in(not working in the not same port)
 app.use(cors())
-
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+app.use('/uploads',express.static(path.join(__dirname, 'uploads')))
 // Middleware to use request.body
 app.use(express.json())
 
