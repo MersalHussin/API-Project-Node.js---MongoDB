@@ -1,6 +1,8 @@
 import { User } from '../models/user.model.js'
+import { generateJWT } from '../utils/generateJWT.js'
 import {SUCCESS,FAIL,ERROR} from '../utils/httpStatus.js'
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 
 
 
@@ -31,7 +33,10 @@ export const login = async(req, res)=>{
         const matchedPassword = await bcrypt.compare(password, user.password)        
 
         if(user && matchedPassword){
-            return res.status(200).json({status:SUCCESS, data:'User Loogged in Succesfully'})
+            // Logged in Succesfully
+        const token =  generateJWT({email,id:user._id})
+
+            return res.status(200).json({status:SUCCESS, data:token})
         }else{
             return res.status(400).json({status:FAIL, message:"email or password is incorrect"})
         }
@@ -53,6 +58,11 @@ export const register = async(req,res) =>{
         const oldUser = await User.findOne({email:email})
         if(oldUser){ return res.status(400).json({status:FAIL, data: `user with email ${email} already exists`})}
         const newUser = new User({fristName,lastName,email,password:hashedPassowrd})
+        
+        const token =  generateJWT({email,id:newUser._id})
+
+        newUser.token= token
+
         await newUser.save()
         
         res.status(200).json({status:SUCCESS, data:{user:newUser}})

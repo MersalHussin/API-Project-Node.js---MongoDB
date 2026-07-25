@@ -1,6 +1,7 @@
 import express from 'express'
 import { getAllUsers, login, register} from '../controllers/usersControllers.js'
 import {bodyValidation} from '../middlewares/validationSchema.js'
+import {verfiyToken} from '../middlewares/verfiyToken.js'
 const router = express.Router()
 
 // عندنا خاصية الـ route داخل الrouter بتخليني اني اعمل كذا method في Route واح
@@ -14,7 +15,7 @@ res.send("HEllo owrld")
 // Register 
 // Login
 router.route('/')
-    .get(getAllUsers)
+    .get(verfiyToken,getAllUsers)
 router.route('/register')
     .post(register)
 router.route('/login')
